@@ -1,8 +1,8 @@
 <h1>Which user are you?</h1>
 
 <ul>  
-  <% Student.all.each do |student| %>
-    <li><a href="/user/<%= student.id %>"><%= student.name %></a></li>
+  <% User.all.each do |user| %> 
+    <li><a href="/user/<%= user.id %>"><%= user.user_name %></a></li>
   <% end %>
 </ul>
 

@@ -53,7 +53,7 @@ module DatabaseClassMethod
   # values - Array of values to add to the row
   #
   # Returns an object of the calling class
-  def add(values = {}) #values_hash = {}
+  def add(values_hash = {}) #values_hash = {}
       table_name = self.to_s.pluralize.underscore
 
       columns = values_hash.keys
