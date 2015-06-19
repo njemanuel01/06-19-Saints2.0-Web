@@ -1,0 +1,7 @@
+<h1>Which country do you want to update?</h1>
+
+<ul>  
+  <% Country.all.each do |country| %>
+    <li><a href="/change_country_information_form/<%= country.id %>"><%= country.name %></a></li>
+  <% end %>
+</ul>

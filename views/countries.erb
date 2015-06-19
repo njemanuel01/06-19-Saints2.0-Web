@@ -1,0 +1,6 @@
+<h1>Here's a list of countries in the database.</h1>
+<ul>  
+  <% Country.all.each do |country| %>
+    <li><%= country.name %></a></li>
+  <% end %>
+</ul>

@@ -1,0 +1,7 @@
+<h1>Which country do you want to see a list of saints for?</h1>
+
+<ul>  
+  <% Country.all.each do |country| %>
+    <li><a href="/where_country/<%= country.id %>"><%= country.name %></a></li>
+  <% end %>
+</ul>
