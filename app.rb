@@ -26,12 +26,14 @@ get "/home" do
   erb :home
 end
 
-get "/login_form" do
-  erb :login_form
+get "/login_list" do
+  erb :login_list
 end
 
-get "/login_form_do" do
+get "/user/:id" do
+  user = User.find(param["id"])
   
+  erb :main_menu
 end
 
 get "/new_user_form" do
@@ -39,9 +41,8 @@ get "/new_user_form" do
 end
 
 get "/new_user_form_do" do
-  user = User.add(params)
-  
-  erb :main_menu
+  @user = User.add(param)
+  erb :user_added
 end
 
 get "/saint_countries/:id" do
@@ -94,10 +95,17 @@ get "/change_country_information_form_do" do
     erb :success
   else
     puts "Update failed."
-    erb :failur
+    erb :failure
   end
 end
 
+get "/saints_in_country_list" do
+  erb :saints_in_country_list
+end
+
+get "where_country/id" do
+  erb :where_country
+end
 
 
 # answer_array = ['Y', 'y', 'N', 'n']

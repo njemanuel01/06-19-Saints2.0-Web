@@ -12,7 +12,6 @@ class User
   def initialize(values = {})
     @id = values["id"].to_i
     @user_name = values["user_name"]
-    @password = values["password"]
   end
   
 end
