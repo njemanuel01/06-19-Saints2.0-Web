@@ -2,7 +2,7 @@
 
 <ul>  
   <% Change.where("user_id", $id).each do |change| %>
-    <li><%= change.change_id %> - <%= change.change_description %></li>
+    <li><%= change.id %> - <%= change.change_description %></li>
   <% end %>
 </ul>
 

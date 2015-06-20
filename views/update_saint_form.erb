@@ -1,4 +1,4 @@
-<h1>Please select the saint and field you wish to update and then add the updated information in the text box.</h1>
+<h1>Please select the saint and field you wish to update and then choose what you want to update.</h1>
 
 <form action="/update_saint_form_do">
   <select name ="saint_id">
@@ -7,6 +7,7 @@
     <% end %>
   </select>
   <select name ="field">
+    <option value="blank"></option>
     <option value="saint_name">Saint Name</option>
     <option value="canonization_year">Canonization Year</option>
     <option value="description">Description</option>

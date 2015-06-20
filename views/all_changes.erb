@@ -1,7 +1,7 @@
 <h1>Here's a list of all the changes made to the database.</h1>
 <ul>  
   <% Change.all.each do |change| %>
-    <li><%= change.change_id%> - <%= change.change_description %></a></li>
+    <li><%= change.id%> - <%= change.change_description %></a></li>
   <% end %>
 </ul>
 

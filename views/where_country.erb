@@ -1,7 +1,7 @@
 <h1>Here they are</h1>
 
 <ul>  
-  <% Saint.where("country_id", params["id"]).each do |saint| %>
+  <% Saint.where("country_id", params["country_id"]).each do |saint| %>
     <li><%= saint.saint_name %></li>
   <% end %>
 </ul>

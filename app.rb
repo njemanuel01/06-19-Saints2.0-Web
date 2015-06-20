@@ -203,33 +203,33 @@ end
 
 get "/update_saint_form_do" do
   saint = Saint.find(params["saint_id"])
-  if params["country_id"]
+  if params["country_id"] != "blank"
     saint.country_id = params["country_id"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s country updated in saints.", "user_id" => $id})
     erb :individual_saints
-  elsif params["category_id"]
+  end
+  if params["category_id"] != "blank"
     saint.category_id = params["category_id"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s category updated in saints.", "user_id" => $id})
     erb :individual_saints
-  else
-    if params["field"] == "saint_name"
-      saint.saint_name = params["update"]
-      saint.save
-      Change.add({"change_description" => "#{params["update"]}'s name updated in saints.", "user_id" => $id})
-      erb :individual_saints
-    elsif params["field"] == "canonization_year"
-      saint.canonization_year = params["update"]
-      saint.save
-      Change.add({"change_description" => "#{saint.saint_name}'s canonization year updated in saints.", "user_id" => $id})
-      erb :individual_saints    
-    elsif
-      saint.description = params["update"]
-      saint.save
-      Change.add({"change_description" => "#{saint.saint_name}'s description updated in countries.", "user_id" => $id})
-      erb :individual_saints
-    end
+  end
+  if params["field"] == "saint_name"
+    saint.saint_name = params["update"]
+    saint.save
+    Change.add({"change_description" => "#{params["update"]}'s name updated in saints.", "user_id" => $id})
+    erb :individual_saints
+  elsif params["field"] == "canonization_year"
+    saint.canonization_year = params["update"]
+    saint.save
+    Change.add({"change_description" => "#{saint.saint_name}'s canonization year updated in saints.", "user_id" => $id})
+    erb :individual_saints    
+  elsif params["field"] == "description"
+    saint.description = params["update"]
+    saint.save
+    Change.add({"change_description" => "#{saint.saint_name}'s description updated in countries.", "user_id" => $id})
+    erb :individual_saints
   end
 end
 

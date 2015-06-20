@@ -27,7 +27,7 @@ module DatabaseClassMethod
     table_name = self.to_s.pluralize.underscore
     
     result = CONNECTION.execute("SELECT * FROM '#{table_name}' WHERE id = ?;", id).first
-    binding.pry
+    
     self.new(result)
   end
   
