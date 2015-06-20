@@ -27,7 +27,7 @@ module DatabaseClassMethod
     table_name = self.to_s.pluralize.underscore
     
     result = CONNECTION.execute("SELECT * FROM '#{table_name}' WHERE id = ?;", id).first
-    
+    binding.pry
     self.new(result)
   end
   
@@ -58,7 +58,6 @@ module DatabaseClassMethod
 
       columns = values_hash.keys
       values = values_hash.values
-      
       CONNECTION.execute("INSERT INTO #{table_name} (#{columns.join ", "}) VALUES (#{values.to_s[1...-1]});")
 
       id = CONNECTION.last_insert_row_id

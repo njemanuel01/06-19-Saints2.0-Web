@@ -33,7 +33,7 @@ class Category
   def valid?
     array = self.class.all
     array.each do |category|
-      if @cateogry_name == category.name
+      if @category_name == category.category_name
         @errors << "This category already exists."
       end
     end

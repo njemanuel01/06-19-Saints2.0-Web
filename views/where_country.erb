@@ -2,7 +2,7 @@
 
 <ul>  
   <% Saint.where("country_id", params["id"]).each do |saint| %>
-    <li><%= saint.name %></li>
+    <li><%= saint.saint_name %></li>
   <% end %>
 </ul>
 

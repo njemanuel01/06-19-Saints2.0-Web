@@ -1,7 +1,7 @@
 <h1>Here's a list of all the saints in the database.</h1>
 <ul>  
   <% Saint.all.each do |saint| %>
-    <li><%= saint.saint_id%> - <%= saint.saint_name %></a></li>
+    <li><%= saint.id%> - <%= saint.saint_name %></a></li>
   <% end %>
 </ul>
 

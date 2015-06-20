@@ -1,7 +1,7 @@
 <h1>Here's a list of all the saint categories in the database.</h1>
 <ul>  
   <% Category.all.each do |category| %>
-    <li><%= category.category_id%> - <%= category.category_name %></a></li>
+    <li><%= category.id%> - <%= category.category_name %></a></li>
   <% end %>
 </ul>
 

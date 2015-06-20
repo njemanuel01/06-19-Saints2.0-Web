@@ -114,23 +114,23 @@ get "/where_country_list" do
   erb :where_country_list
 end
 
-get "where_country" do
+get "/where_country" do
   erb :where_country
 end
 
-get "delete_country_list" do
+get "/delete_country_list" do
   erb :delete_country_list
 end
 
-get "delete_country" do
+get "/delete_country" do
   if Saint.where("country_id", params["country_id"]) == []
     country = Country.find(params["country_id"])
     name = country.country_name
-    @list << country.delete
-    Change.add(["#{name} deleted from countries.", $id])
+    @list = country.delete
+    Change.add({"change_description" => "#{name} deleted from countries.", "user_id" => $id})
     erb :delete_country
   else
-    @list << "The country has saints associated with it, it cannot be deleted."
+    @list = "The country has saints associated with it, it cannot be deleted."
     erb :delete_country
   end
 end
@@ -160,23 +160,23 @@ get "/where_category_list" do
   erb :where_category_list
 end
 
-get "where_category/id" do
+get "/where_category" do
   erb :where_category
 end
 
-get "delete_category_list" do
+get "/delete_category_list" do
   erb :delete_category_list
 end
 
-get "delete_category" do
+get "/delete_category" do
   if Saint.where("category_id", params["category_id"]) == []
     category = Category.find(params["category_id"])
     name = category.category_name
-    @list << category.delete
-    Change.add(["#{name} deleted from categories.", $id])
+    @list = category.delete
+    Change.add({"change_description" => "#{name} deleted from categories.", "user_id" => $id})
     erb :delete_category
   else
-    @list << "The category has saints associated with it, it cannot be deleted."
+    @list = "The category has saints associated with it, it cannot be deleted."
     erb :delete_category
   end
 end
@@ -192,7 +192,7 @@ get "/new_saint_form" do
 end
 
 get "/new_saint_form_do" do
-  Saint.add({"id" => nil, "saint_name" => params["saint_name"], "canonization_year" => params["canonization_year"], "description" => params["description"], "category_id" => params["category_id"], "country_id" => params["country_id"]})
+  Saint.add({"saint_name" => params["saint_name"], "canonization_year" => params["canonization_year"].to_i, "description" => params["description"], "category_id" => params["category_id"], "country_id" => params["country_id"]})
   
   erb :individual_saints
 end
@@ -260,15 +260,15 @@ get "/where_keyword_form_do" do
   erb :where_keyword
 end
 
-get "delete_saint_list" do
+get "/delete_saint_list" do
   erb :delete_saint_list
 end
 
-get "delete_saint" do
+get "/delete_saint" do
   saint = Saint.find(params["saint_id"])
   name = saint.saint_name
-  @list << category.delete
-  Change.add(["#{name} deleted from saints.", $id])
+  @list = saint.delete
+  Change.add({"change_description" => "#{name} deleted from saints.", "user_id" => $id})
   erb :delete_saint
 end
 
@@ -278,7 +278,7 @@ get "/all_changes" do
   erb :all_changes
 end
 
-get "where_user" do
+get "/where_user" do
   erb :where_user
 end
 # answer_array = ['Y', 'y', 'N', 'n']
