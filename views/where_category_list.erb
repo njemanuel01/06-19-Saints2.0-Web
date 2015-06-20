@@ -1,0 +1,7 @@
+<h1>Which category do you want to see a list of saints for?</h1>
+
+<ul>  
+  <% Category.all.each do |category| %>
+    <li><a href="/where_category/<%= category.id %>"><%= category.category_name %></a></li>
+  <% end %>
+</ul>

@@ -46,6 +46,8 @@ get "/new_user_form_do" do
   erb :main_menu
 end
 
+#---------------------------------------------------------------------------------
+
 get "/saint_countries" do
   erb :saint_countries
 end
@@ -61,6 +63,8 @@ end
 get "/user_changes" do
   erb :user_changes
 end
+
+#--------------------------------------------------------------------------------
 
 get "/all_countries" do
   erb :all_countries
@@ -126,7 +130,34 @@ get "where_country/id" do
   erb :where_country
 end
 
+#-------------------------------------------------------------------------------------
 
+et "/all_categories" do
+  erb :all_countries
+end
+
+get "/new_category_form" do
+  erb :new_country_form
+end
+
+get "/new_category_form_do" do
+  category = Category.new({"id" => nil, "category_name" => params["category_name"]})
+  if category.add_to_database
+    Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => $id})
+    erb :saint_countries
+  else
+    @errors = country.errors
+    erb :failure
+  end
+end
+
+get "/where_category_list" do
+  erb :where_category_list
+end
+
+get "where_category/id" do
+  erb :where_category
+end
 # answer_array = ['Y', 'y', 'N', 'n']
 # initial_array = ['1-Saint Countries', '2-Saint Categories', '3-Individual Saints', '4-User Changes', '5-Quit']
 # answer1 = 0

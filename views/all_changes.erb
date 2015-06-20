@@ -1,0 +1,8 @@
+<h1>Here's a list all the changes made to the database.</h1>
+<ul>  
+  <% Change.all.each do |change| %>
+    <li><%= change.change_id%> - <%= change.change_description %></a></li>
+  <% end %>
+</ul>
+
+<p><a href="/user_changes">Back</a></p>

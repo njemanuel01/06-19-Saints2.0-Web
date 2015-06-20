@@ -20,7 +20,7 @@ class Category
   # Returns a Boolean.
   def add_to_database
     if self.valid?
-      CONNECTION.execute("INSERT INTO categories (category_name) VALUES (?);", @name)
+      CONNECTION.execute("INSERT INTO categories (category_name) VALUES (?);", @category_name)
       @id = CONNECTION.last_insert_row_id
     else
       false
@@ -33,7 +33,7 @@ class Category
   def valid?
     array = self.class.all
     array.each do |category|
-      if @name == category.name
+      if @cateogry_name == category.name
         @errors << "This category already exists."
       end
     end
