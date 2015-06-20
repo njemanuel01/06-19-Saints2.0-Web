@@ -1,9 +1,0 @@
-<h1>Which user are you?</h1>
-
-<ul>  
-  <% User.all.each do |user| %> 
-    <li><a href="/user/<%= user.id %>"><%= user.user_name %></a></li>
-  <% end %>
-</ul>
-
-<p><a href="/new_user_form">New User?</a></p>

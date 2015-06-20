@@ -1,0 +1,19 @@
+<h1>Please select the country and field you wish to update and then add the updated information in the text box.</h1>
+
+<form action="/update_country_form_do">
+  <select name ="country_id">
+    <% Country.all.each do |country| %> 
+      <option value="<%= country.id %>"><%= country.user_name %></option>
+    <% end %>
+  </select>
+  <select name ="field">
+    <option value="country_name">Country Name</option>
+    <option value="country_description">Country Description</option>
+  </select>
+  <input type="text" placeholder="Update" name="update">
+  <input type="submit">
+</form>
+
+<a href="/saint_countries">Return to Saint Countries</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

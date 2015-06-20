@@ -26,14 +26,11 @@ get "/home" do
   erb :home
 end
 
-get "/login_list" do
-  erb :login_list
-end
-
-get "/user/:id" do
-  user = User.find(params["id"])
+get "/user" do
+  user = User.find(params["user_id"])
   $id = user.id
-  erb :main_menu
+  @name = user.user_name
+  erb :login_success
 end
 
 get "/new_user_form" do
@@ -41,12 +38,16 @@ get "/new_user_form" do
 end
 
 get "/new_user_form_do" do
-  @user = User.add(params)
+  user = User.add(params)
   $id = user.id
-  erb :main_menu
+  @name = user.user_name
+  erb :login_success
 end
 
 #---------------------------------------------------------------------------------
+get "/main_menu" do
+  erb :main_menu
+end
 
 get "/saint_countries" do
   erb :saint_countries
@@ -83,6 +84,83 @@ get "/new_country_form_do" do
     @errors = country.errors
     erb :failure
   end
+end
+
+get "/update_country_form" do
+  erb :update_country_form
+end
+
+get "/update_country_form_do" do
+  country = Country.find(params["country_id"])
+  if params["field"] == "country_name"
+    country.country_name = params["update"]
+    if country.valid?
+      country.save
+      Change.add({"change_description" => "#{params["update"]}'s name updated in countries.", "user_id" => $id})
+      erb :saint_countries
+    else
+      @errors = country.errors
+      erb :failure
+    end
+  else
+    country.country_description = params["update"]
+    country.save
+    Change.add({"change_description" => "#{country.country_name}'s description updated in countries.", "user_id" => $id})
+    erb :saint_countries
+  end
+end
+
+get "/where_country_list" do
+  erb :where_country_list
+end
+
+get "where_country/id" do
+  erb :where_country
+end
+
+#-------------------------------------------------------------------------------------
+
+get "/all_categories" do
+  erb :all_countries
+end
+
+get "/new_category_form" do
+  erb :new_category_form
+end
+
+get "/new_category_form_do" do
+  category = Category.new({"id" => nil, "category_name" => params["category_name"]})
+  if category.add_to_database
+    Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => $id})
+    erb :saint_categories
+  else
+    @errors = country.errors
+    erb :failure
+  end
+end
+
+get "/where_category_list" do
+  erb :where_category_list
+end
+
+get "where_category/id" do
+  erb :where_category
+end
+
+#-----------------------------------------------------------------------------------
+
+get "/all_saints" do
+  erb :all_saints
+end
+
+get "/new_saint_form" do
+  erb :new_saint_form
+end
+
+get "/new_saint_form_do" do
+  Saint.add({"id" => nil, "saint_name" => params["saint_name"], "canonization_year" => params["canonization_year"], "description" => params["description"], "category_id" => params["category_id"], "country_id" => params["country_id"]})
+  
+  erb :individual_saints
 end
 
 get "/update_country_list" do
@@ -130,33 +208,14 @@ get "where_country/id" do
   erb :where_country
 end
 
-#-------------------------------------------------------------------------------------
+#-----------------------------------------------------------------------------------
 
-et "/all_categories" do
-  erb :all_countries
+get "/all_changes" do
+  erb :all_changes
 end
 
-get "/new_category_form" do
-  erb :new_country_form
-end
-
-get "/new_category_form_do" do
-  category = Category.new({"id" => nil, "category_name" => params["category_name"]})
-  if category.add_to_database
-    Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => $id})
-    erb :saint_countries
-  else
-    @errors = country.errors
-    erb :failure
-  end
-end
-
-get "/where_category_list" do
-  erb :where_category_list
-end
-
-get "where_category/id" do
-  erb :where_category
+get "where_user" do
+  erb :where_user
 end
 # answer_array = ['Y', 'y', 'N', 'n']
 # initial_array = ['1-Saint Countries', '2-Saint Categories', '3-Individual Saints', '4-User Changes', '5-Quit']
