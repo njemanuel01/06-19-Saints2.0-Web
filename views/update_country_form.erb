@@ -3,7 +3,7 @@
 <form action="/update_country_form_do">
   <select name ="country_id">
     <% Country.all.each do |country| %> 
-      <option value="<%= country.id %>"><%= country.user_name %></option>
+      <option value="<%= country.id %>"><%= country.country_name %></option>
     <% end %>
   </select>
   <select name ="field">

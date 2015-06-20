@@ -1,0 +1,14 @@
+<h1>Which saint do you want to delete?</h1>
+
+<form action="/delete_saint">
+  <select name ="saint_id">
+    <% Saint.all.each do |saint| %> 
+      <option value="<%= saint.id %>"><%= saint.saint_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<a href="individual_saints">Return to Individual Saints</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

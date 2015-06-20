@@ -1,0 +1,10 @@
+<h1>Here's a list of all the saint categories in the database.</h1>
+<ul>  
+  <% Category.all.each do |category| %>
+    <li><%= category.category_id%> - <%= category.category_name %></a></li>
+  <% end %>
+</ul>
+
+<a href="/saint_categories">Return to Saint Categories</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

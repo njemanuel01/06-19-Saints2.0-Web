@@ -1,0 +1,10 @@
+<h1>Here's a list of all the saints in the database.</h1>
+<ul>  
+  <% Saint.all.each do |saint| %>
+    <li><%= saint.saint_id%> - <%= saint.saint_name %></a></li>
+  <% end %>
+</ul>
+
+<a href="/individual_saints">Return to Individual Saints</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

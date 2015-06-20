@@ -1,0 +1,16 @@
+<h1>Saint Name</h1>
+<p><%= @saint.saint_name%></p>
+<h1>Canonization Year</h1>
+<p><%= @saint.canonization_year%></p>
+<h1>Description</h1>
+<p><%= @saint.description%></p>
+<h1>Country</h1>
+<% country = Country.find(@saint.country_id) %>
+<p><%= country.get("country_name") %></p>
+<h1>Category</h1>
+<% category = Category.find(@saint.category_id) %>
+<p><%= category.get("category_name") %></p>
+
+<a href="/individual_saints">Return to Individual Saints</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

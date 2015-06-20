@@ -1,6 +1,6 @@
-<h1>Which category do you want to see a list of saints for?</h1>
+<h1>Which category do you want to delete?</h1>
 
-<form action="/where_category">
+<form action="/delete_category">
   <select name ="category_id">
     <% Category.all.each do |category| %> 
       <option value="<%= category.id %>"><%= category.category_name %></option>
@@ -9,6 +9,6 @@
   <input type="submit">
 </form>
 
-<a href="/saint_categories">Return to Saint Categories</a></b>
+<a href="saint_categories">Return to Saint Categories</a></b>
 <a href="/main_menu">Return to Main Menu</a></b>
 <a href="/home">Logout?</a>
