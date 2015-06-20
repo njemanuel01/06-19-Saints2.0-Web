@@ -32,7 +32,7 @@ end
 
 get "/user/:id" do
   user = User.find(params["id"])
-  
+  $id = user.id
   erb :main_menu
 end
 
@@ -42,22 +42,23 @@ end
 
 get "/new_user_form_do" do
   @user = User.add(params)
+  $id = user.id
   erb :main_menu
 end
 
-get "/saint_countries/" do
+get "/saint_countries" do
   erb :saint_countries
 end
 
-get "/saint_categories/" do
+get "/saint_categories" do
   erb :saint_categories
 end
 
-get "/individual_saints/" do
+get "/individual_saints" do
   erb :individual_saints
 end
 
-get "/user_changes/" do
+get "/user_changes" do
   erb :user_changes
 end
 
@@ -70,11 +71,12 @@ get "/new_country_form" do
 end
 
 get "/new_country_form_do" do
-  @country = Country.new({"id" => nil, "country_name" => params["country_name"], "country_description" => params["description"]})
+  country = Country.new({"id" => nil, "country_name" => params["country_name"], "country_description" => params["description"]})
   if country.add_to_database
-    Change.add(["Added #{params["country_name"]} to countries.", user.id])
+    Change.add({"change_description" => "Added #{params["country_name"]} to countries.", "user_id" => $id})
     erb :saint_countries
   else
+    @errors = country.errors
     erb :failure
   end
 end
@@ -92,14 +94,14 @@ get "/update_country_name_form/:id" do
 end
 
 get "/update_country_name_form_do/:id" do
-  @country = Country.find(params["id"])
+  country = Country.find(params["id"])
   country.country_name = params["country_name"]
   if country.valid?
     country.save
-    Change.add(["#{params["country_name"]}'s name updated in countries.", user.id])
+    Change.add({"change_description" => "#{params["country_name"]}'s name updated in countries.", "user_id" => $id})
     erb :saint_countries
   else
-    puts "Update failed."
+    @errors = country.errors
     erb :failure
   end
 end
@@ -109,15 +111,15 @@ get "/update_country_description_form/:id" do
 end
 
 get "/update_country_description_form_do/:id" do
-  @country = Country.find(params["id"])
+  country = Country.find(params["id"])
   country.country_description = params["country_description"]
   country.save
-  Change.add(["#{params["country_name"]}'s name updated in countries.", user.id])
+  Change.add({"change_description" => "#{params["country_name"]}'s name updated in countries.", "user_id" => $id})
   erb :saint_countries
 end
 
-get "/saints_in_country_list" do
-  erb :saints_in_country_list
+get "/where_country_list" do
+  erb :where_country_list
 end
 
 get "where_country/id" do

@@ -1,9 +1,9 @@
 <h1>Failure</h1>
 
 <ul>  
-  <% country.errors.each do |error| %>
+  <% @errors.each do |error| %>
     <li><%= error %></a></li>
   <% end %>
 </ul>
 
-<p><a href="/main_menu">Back to main menus</a></p>
+<p><a href="/user/<%= $id %>">Back to main menus</a></p>

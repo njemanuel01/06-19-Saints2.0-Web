@@ -2,6 +2,6 @@
 
 <ul>  
   <% Country.all.each do |country| %>
-    <li><a href="/update_country_form/<% country.id %>"><%= country.name %></a></li>
+    <li><a href="/update_country_name_description/<%= country.id %>"><%= country.country_name %></a></li>
   <% end %>
 </ul>

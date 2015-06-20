@@ -21,7 +21,7 @@ class Country
   # Returns a Boolean.
   def add_to_database
     if self.valid?
-      CONNECTION.execute("INSERT INTO countries (country_name, country_description) VALUES (?, ?);", @name, @description)
+      CONNECTION.execute("INSERT INTO countries (country_name, country_description) VALUES (?, ?);", @country_name, @country_description)
       @id = CONNECTION.last_insert_row_id
     else
       false
@@ -34,7 +34,7 @@ class Country
   def valid?
     array = self.class.all
     array.each do |country|
-      if @name == country.name
+      if @country_name == country.country_name
         @errors << "This country already exists."
       end
     end
