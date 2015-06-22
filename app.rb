@@ -44,6 +44,7 @@ get "/new_user_form_do" do
   else
     @errors = user.errors
     params["cat"] = "user"
+    binding.pry
     erb :new_form
   end
 end
