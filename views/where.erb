@@ -1,0 +1,78 @@
+<% if params["cat"] == "country" %>
+<h1>Which country do you want to see a list of saints for?</h1>
+
+<form action="/where/country">
+  <select name ="country_id">
+    <% Country.all.each do |country| %> 
+      <option value="<%= country.id %>"><%= country.country_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<% if params["country_id"]%>
+  <h1>Here they are</h1>
+
+  <ul>  
+    <% Saint.where("country_id", params["country_id"]).each do |saint| %>
+      <li><%= saint.saint_name %></li>
+      <% end %>
+  </ul>
+<% end %>
+
+<a href="/saint_countries">Return to Saint Countries</a></b>
+
+<% elsif params["cat"] == "category" %>
+<h1>Which category do you want to see a list of saints for?</h1>
+
+<form action="/where/category">
+  <select name ="category_id">
+    <% Category.all.each do |category| %> 
+      <option value="<%= category.id %>"><%= category.category_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<% if params["category_id"]%>
+  <h1>Here they are</h1>
+
+  <ul>  
+    <% Saint.where("category_id", params["category_id"]).each do |saint| %>
+      <li><%= saint.saint_name %></li>
+      <% end %>
+  </ul>
+<% end %>
+
+<a href="/saint_categories">Return to Saint Categories</a></b>
+
+<% elsif params["cat"] == "saint" %>
+
+<h1>Which saint do you want to see information for?</h1>
+
+<form action="/see_saint">
+  <select name ="saint_id">
+    <% Saint.all.each do |saint| %> 
+      <option value="<%= saint.id %>"><%= saint.saint_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<a href="/individual_saints">Return to Individual Saints</a></b>
+
+<% elsif params["cat"] == "user" %>
+<h1>Here are the changes you have made to the database</h1>
+
+<ul>  
+  <% Change.where("user_id", $id).each do |change| %>
+    <li><%= change.id %> - <%= change.change_description %></li>
+  <% end %>
+</ul>
+
+<a href="/user_changes">Return to User Changes</a></b>
+
+<% end %>
+
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

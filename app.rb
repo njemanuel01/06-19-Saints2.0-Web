@@ -84,6 +84,10 @@ end
 get "/update_form/:cat" do
   erb :update_form
 end
+
+get "/where/:cat" do
+  erb :where
+end
 #--------------------------------------------------------------------------------
 
 get "/new_country_form_do" do
@@ -124,14 +128,6 @@ get "/update_country_form_do" do
   erb :saint_countries
 end
 
-get "/where_country_list" do
-  erb :where_country_list
-end
-
-get "/where_country" do
-  erb :where_country
-end
-
 get "/delete_country" do
   if Saint.where("country_id", params["country_id"]) == []
     country = Country.find(params["country_id"])
@@ -158,14 +154,6 @@ get "/new_category_form_do" do
     params["cat"] = "category"
     erb :new_form
   end
-end
-
-get "/where_category_list" do
-  erb :where_category_list
-end
-
-get "/where_category" do
-  erb :where_category
 end
 
 get "/delete_category" do
@@ -226,10 +214,6 @@ get "/update_saint_form_do" do
   erb :individual_saints
 end
 
-get "/see_saint_list" do
-  erb :see_saint_list
-end
-
 get "/see_saint" do
   @saint = Saint.find(params["saint_id"])
   erb :see_saint
@@ -261,8 +245,3 @@ get "/delete_saint" do
   erb :individual_saints
 end
 
-#-----------------------------------------------------------------------------------
-
-get "/where_user" do
-  erb :where_user
-end
