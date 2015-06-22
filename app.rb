@@ -1,5 +1,6 @@
 require "sqlite3"
 require "sinatra"
+require "sinatra/reloader"
 require "pry"
 
 CONNECTION = SQLite3::Database.new("saints.db")
