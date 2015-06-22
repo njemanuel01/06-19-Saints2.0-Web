@@ -74,8 +74,8 @@ end
 
 #--------------------------------------------------------------------------------
 
-get "/all_countries" do
-  erb :all_countries
+get "/all/:cat" do
+  erb :all
 end
 
 get "/new_country_form" do
@@ -144,8 +144,8 @@ end
 
 #-------------------------------------------------------------------------------------
 
-get "/all_categories" do
-  erb :all_categories
+get "/all/:cat" do
+  erb :all
 end
 
 get "/new_category_form" do
@@ -190,8 +190,8 @@ end
 
 #-----------------------------------------------------------------------------------
 
-get "/all_saints" do
-  erb :all_saints
+get "/all/:cat" do
+  erb :all
 end
 
 get "/new_saint_form" do

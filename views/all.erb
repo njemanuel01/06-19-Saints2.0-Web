@@ -1,0 +1,47 @@
+<% if params["cat"] == "countries"%>
+<h1>Here's a list of countries in the database.</h1>
+<ul>  
+  <% Country.all.each do |country| %>
+    <li><%= country.id%> - <%= country.country_name %></a></li>
+  <% end %>
+</ul>
+
+<a href="/saint_countries">Return to Saint Countries</a></b>
+
+<% elsif params["cat"] == "categories"%>
+
+<h1>Here's a list of all the saint categories in the database.</h1>
+<ul>  
+  <% Category.all.each do |category| %>
+    <li><%= category.id%> - <%= category.category_name %></a></li>
+  <% end %>
+</ul>
+
+<a href="/saint_categories">Return to Saint Categories</a></b>
+
+<% elsif params["cat"] == "saints"%>
+
+<h1>Here's a list of all the saints in the database.</h1>
+<ul>  
+  <% Saint.all.each do |saint| %>
+    <li><%= saint.id%> - <%= saint.saint_name %></a></li>
+  <% end %>
+</ul>
+
+<a href="/individual_saints">Return to Individual Saints</a></b>
+
+<% elsif params["cat"] == "changes"%>
+
+<h1>Here's a list of all the changes made to the database.</h1>
+<ul>  
+  <% Change.all.each do |change| %>
+    <li><%= change.id%> - <%= change.change_description %></a></li>
+  <% end %>
+</ul>
+
+<a href="/user_changes">Return to User Changes</a></b>
+
+<% end %>
+
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>
