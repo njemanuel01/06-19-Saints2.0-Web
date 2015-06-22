@@ -40,4 +40,25 @@ module DatabaseInstanceMethod
     "Deleted."
   end
   
+  # Adds a new country to a table
+  #
+  # Returns a Boolean.
+  def add_to_database
+    table_name = self.class.to_s.pluralize.underscore
+    
+    hash = {}
+    self.instance_variables.each {|var| hash[var.to_s.delete("@")] = self.instance_variable_get(var) }
+    hash.delete("id")
+    hash.delete("errors")
+    
+    columns = hash.keys
+    values = hash.values
+    if self.valid?
+      CONNECTION.execute("INSERT INTO #{table_name} (#{columns.join ", "}) VALUES (#{values.to_s[1...-1]});")
+      @id = CONNECTION.last_insert_row_id
+    else
+      false
+    end
+  end
+  
 end

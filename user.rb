@@ -14,4 +14,18 @@ class User
     @user_name = values["user_name"]
   end
   
+  # Checks to see if a user name already exists in the table
+  #
+  # Returns a Boolean.
+  def valid?
+    array = self.class.all
+    array.each do |user|
+      if @user_name == user.user_name
+        @errors << "This username already exists."
+      end
+    end
+    
+    return @errors.empty?
+  end
+  
 end
