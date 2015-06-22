@@ -54,6 +54,7 @@ module DatabaseInstanceMethod
     columns = hash.keys
     values = hash.values
     if self.valid?
+      querty_string = "INSERT INTO #{table_name} (#{columns.join ", "}) VALUES (#{values.to_s[1...-1]});"
       CONNECTION.execute("INSERT INTO #{table_name} (#{columns.join ", "}) VALUES (#{values.to_s[1...-1]});")
       @id = CONNECTION.last_insert_row_id
     else

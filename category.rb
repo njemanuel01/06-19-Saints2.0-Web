@@ -18,14 +18,14 @@ class Category
   # Adds a new category to the categories table
   #
   # Returns a Boolean.
-  def add_to_database
-    if self.valid?
-      CONNECTION.execute("INSERT INTO categories (category_name) VALUES (?);", @category_name)
-      @id = CONNECTION.last_insert_row_id
-    else
-      false
-    end
-  end
+  # def add_to_database
+#     if self.valid?
+#       CONNECTION.execute("INSERT INTO categories (category_name) VALUES (?);", @category_name)
+#       @id = CONNECTION.last_insert_row_id
+#     else
+#       false
+#     end
+#   end
   
   # Checks to see if a category already exists in the table
   #

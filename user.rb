@@ -5,13 +5,14 @@ class User
   extend DatabaseClassMethod
   include DatabaseInstanceMethod
   
-  attr_accessor :id, :user_name
+  attr_accessor :id, :user_name, :errors
   # Creates an instance of the User class.
   #
   # values - hash with "id" and "user_name" values
   def initialize(values = {})
     @id = values["id"].to_i
     @user_name = values["user_name"]
+    @errors = []
   end
   
   # Checks to see if a user name already exists in the table

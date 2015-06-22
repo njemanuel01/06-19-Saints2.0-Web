@@ -40,9 +40,9 @@ end
 
 get "/new_user_form_do" do
   user = User.new({"id" => nil, "user_name" => params["user_name"]})
-  if User.add_to_database
-    Change.add({"change_description" => "Added #{params["country_name"]} to countries.", "user_id" => $id})
+  if user.add_to_database
     $id = user.id
+    Change.add({"change_description" => "Added #{params["user_name"]} to users.", "user_id" => $id})
     @name = user.user_name
     erb :login_success
   else
