@@ -16,18 +16,6 @@ class Country
     @errors = []
   end
   
-  # Adds a new country to the countries table
-  #
-  # Returns a Boolean.
-  # def add_to_database
-#     if self.valid?
-#       CONNECTION.execute("INSERT INTO countries (country_name, country_description) VALUES (?, ?);", @country_name, @country_description)
-#       @id = CONNECTION.last_insert_row_id
-#     else
-#       false
-#     end
-#   end
-  
   # Checks to see if a country already exists in the table
   #
   # Returns a Boolean.
