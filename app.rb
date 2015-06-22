@@ -34,10 +34,6 @@ get "/user" do
   erb :login_success
 end
 
-get "/new_user_form" do
-  erb :new_user_form
-end
-
 get "/new_user_form_do" do
   user = User.new({"id" => nil, "user_name" => params["user_name"]})
   if user.add_to_database
@@ -47,7 +43,8 @@ get "/new_user_form_do" do
     erb :login_success
   else
     @errors = user.errors
-    erb :failure
+    params["cat"] = "user"
+    erb :new_form
   end
 end
 
@@ -79,20 +76,22 @@ end
 get "/delete/:cat" do
   erb :delete
 end
-#--------------------------------------------------------------------------------
 
-get "/new_country_form" do
-  erb :new_country_form
+get "/new_form/:cat" do
+  erb :new_form
 end
+#--------------------------------------------------------------------------------
 
 get "/new_country_form_do" do
   country = Country.new({"id" => nil, "country_name" => params["country_name"], "country_description" => params["description"]})
   if country.add_to_database
     Change.add({"change_description" => "Added #{params["country_name"]} to countries.", "user_id" => $id})
+    @message = "Country added."
     erb :saint_countries
   else
     @errors = country.errors
-    erb :failure
+    params["cat"] = "country"
+    erb :new_form
   end
 end
 
@@ -143,18 +142,16 @@ end
 
 #-------------------------------------------------------------------------------------
 
-get "/new_category_form" do
-  erb :new_category_form
-end
-
 get "/new_category_form_do" do
   category = Category.new({"id" => nil, "category_name" => params["category_name"]})
   if category.add_to_database
     Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => $id})
+    @message = "Category added."
     erb :saint_categories
   else
     @errors = country.errors
-    erb :failure
+    params["cat"] = "category"
+    erb :new_form
   end
 end
 
@@ -181,13 +178,9 @@ end
 
 #-----------------------------------------------------------------------------------
 
-get "/new_saint_form" do
-  erb :new_saint_form
-end
-
 get "/new_saint_form_do" do
   Saint.add({"saint_name" => params["saint_name"], "canonization_year" => params["canonization_year"].to_i, "description" => params["description"], "category_id" => params["category_id"], "country_id" => params["country_id"]})
-  
+  @message = "Saint added."
   erb :individual_saints
 end
 
