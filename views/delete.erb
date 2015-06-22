@@ -1,0 +1,47 @@
+<% if params["cat"] == "country" %>
+<h1>Which country do you want to delete?</h1>
+
+<form action="/delete_country">
+  <select name ="country_id">
+    <% Country.all.each do |country| %> 
+      <option value="<%= country.id %>"><%= country.country_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<a href="saint_countries">Return to Saint Countries</a></b>
+
+<% elsif params["cat"] == "category" %>
+
+<h1>Which category do you want to delete?</h1>
+
+<form action="/delete_category">
+  <select name ="category_id">
+    <% Category.all.each do |category| %> 
+      <option value="<%= category.id %>"><%= category.category_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<a href="saint_categories">Return to Saint Categories</a></b>
+
+<% elsif params["cat"] == "saint" %>
+
+<h1>Which saint do you want to delete?</h1>
+
+<form action="/delete_saint">
+  <select name ="saint_id">
+    <% Saint.all.each do |saint| %> 
+      <option value="<%= saint.id %>"><%= saint.saint_name %></option>
+    <% end %>
+  </select>
+  <input type="submit">
+</form>
+
+<a href="individual_saints">Return to Individual Saints</a></b>
+
+<% end %>
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>

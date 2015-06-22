@@ -72,11 +72,14 @@ get "/user_changes" do
   erb :user_changes
 end
 
-#--------------------------------------------------------------------------------
-
 get "/all/:cat" do
   erb :all
 end
+
+get "/delete/:cat" do
+  erb :delete
+end
+#--------------------------------------------------------------------------------
 
 get "/new_country_form" do
   erb :new_country_form
@@ -125,28 +128,20 @@ get "/where_country" do
   erb :where_country
 end
 
-get "/delete_country_list" do
-  erb :delete_country_list
-end
-
 get "/delete_country" do
   if Saint.where("country_id", params["country_id"]) == []
     country = Country.find(params["country_id"])
     name = country.country_name
-    @list = country.delete
+    @message = country.delete
     Change.add({"change_description" => "#{name} deleted from countries.", "user_id" => $id})
-    erb :delete_country
+    erb :saint_countries
   else
-    @list = "The country has saints associated with it, it cannot be deleted."
-    erb :delete_country
+    @message = "The country has saints associated with it, it cannot be deleted."
+    erb :saint_counries
   end
 end
 
 #-------------------------------------------------------------------------------------
-
-get "/all/:cat" do
-  erb :all
-end
 
 get "/new_category_form" do
   erb :new_category_form
@@ -171,28 +166,20 @@ get "/where_category" do
   erb :where_category
 end
 
-get "/delete_category_list" do
-  erb :delete_category_list
-end
-
 get "/delete_category" do
   if Saint.where("category_id", params["category_id"]) == []
     category = Category.find(params["category_id"])
     name = category.category_name
-    @list = category.delete
+    @message = category.delete
     Change.add({"change_description" => "#{name} deleted from categories.", "user_id" => $id})
-    erb :delete_category
+    erb :saint_categories
   else
-    @list = "The category has saints associated with it, it cannot be deleted."
-    erb :delete_category
+    @message = "The category has saints associated with it, it cannot be deleted."
+    erb :saint_categories
   end
 end
 
 #-----------------------------------------------------------------------------------
-
-get "/all/:cat" do
-  erb :all
-end
 
 get "/new_saint_form" do
   erb :new_saint_form
@@ -267,23 +254,15 @@ get "/where_keyword_form_do" do
   erb :where_keyword
 end
 
-get "/delete_saint_list" do
-  erb :delete_saint_list
-end
-
 get "/delete_saint" do
   saint = Saint.find(params["saint_id"])
   name = saint.saint_name
-  @list = saint.delete
+  @message = saint.delete
   Change.add({"change_description" => "#{name} deleted from saints.", "user_id" => $id})
-  erb :delete_saint
+  erb :individual_saints
 end
 
 #-----------------------------------------------------------------------------------
-
-get "/all_changes" do
-  erb :all_changes
-end
 
 get "/where_user" do
   erb :where_user
