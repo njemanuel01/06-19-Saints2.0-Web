@@ -2,7 +2,7 @@
 <% if params["cat"] == "user" %>
 <h1>Please type in your desired username.</h1>
 <form action="/new_user_form_do">
-  <input type="text" placeholder="New User Name" name="user_name" value="<% params["user_name"] %>">
+  <input type="text" placeholder="New User Name" name="user_name" value="<%= params["user_name"] %>">
   <input type="submit">
 </form>
 
@@ -11,7 +11,7 @@
 <h1>Please enter all the information below and hit submit.</h1>
 
 <form action="/new_country_form_do">
-  <input type="text" placeholder="New Country Name" name="country_name" value="<% params["country_name"] %>">
+  <input type="text" placeholder="New Country Name" name="country_name" value="<%= params["country_name"] %>">
   <input type="text" placeholder= "New Country Description" name="description">
   <input type="submit">
 </form>
@@ -21,7 +21,7 @@
 <% elsif params["cat"] == "category" %>
 
 <form action="/new_category_form_do">
-  <input type="text" placeholder="New Category Name" name="category_name" value="<% params["category_name"] %>">
+  <input type="text" placeholder="New Category Name" name="category_name" value="<%= params["category_name"] %>">
   <input type="submit">
 </form>
 
