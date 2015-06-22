@@ -44,7 +44,6 @@ get "/new_user_form_do" do
   else
     @errors = user.errors
     params["cat"] = "user"
-    binding.pry
     erb :new_form
   end
 end
@@ -81,6 +80,10 @@ end
 get "/new_form/:cat" do
   erb :new_form
 end
+
+get "/update_form/:cat" do
+  erb :update_form
+end
 #--------------------------------------------------------------------------------
 
 get "/new_country_form_do" do
@@ -96,28 +99,29 @@ get "/new_country_form_do" do
   end
 end
 
-get "/update_country_form" do
-  erb :update_country_form
-end
-
 get "/update_country_form_do" do
   country = Country.find(params["country_id"])
-  if params["field"] == "country_name"
-    country.country_name = params["update"]
+  @message = []
+  if params["name"] != ""
+    country.country_name = params["name"]
     if country.valid?
       country.save
-      Change.add({"change_description" => "#{params["update"]}'s name updated in countries.", "user_id" => $id})
-      erb :saint_countries
+      Change.add({"change_description" => "#{params["name"]}'s name updated in countries.", "user_id" => $id})
+      @message << "Country name updated."
     else
       @errors = country.errors
-      erb :failure
+      params["cat"] = "country"
+      erb :update_form
     end
-  else
-    country.country_description = params["update"]
+  end
+  if params["description"] != ""
+    country.country_description = params["description"]
     country.save
     Change.add({"change_description" => "#{country.country_name}'s description updated in countries.", "user_id" => $id})
-    erb :saint_countries
+    @message << "Country description updated."
   end
+  
+  erb :saint_countries
 end
 
 get "/where_country_list" do
@@ -185,40 +189,41 @@ get "/new_saint_form_do" do
   erb :individual_saints
 end
 
-get "/update_saint_form" do
-  erb :update_saint_form
-end
-
 get "/update_saint_form_do" do
   saint = Saint.find(params["saint_id"])
+  @message = []
   if params["country_id"] != "blank"
     saint.country_id = params["country_id"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s country updated in saints.", "user_id" => $id})
-    erb :individual_saints
+    @message << "Saint country updated."
   end
   if params["category_id"] != "blank"
     saint.category_id = params["category_id"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s category updated in saints.", "user_id" => $id})
-    erb :individual_saints
+    @message << "Saint category updated."
   end
-  if params["field"] == "saint_name"
-    saint.saint_name = params["update"]
+  if params["name"] != ""
+    saint.saint_name = params["name"]
     saint.save
-    Change.add({"change_description" => "#{params["update"]}'s name updated in saints.", "user_id" => $id})
-    erb :individual_saints
-  elsif params["field"] == "canonization_year"
-    saint.canonization_year = params["update"]
+    Change.add({"change_description" => "#{params["name"]}'s name updated in saints.", "user_id" => $id})
+    @message << "Saint name updated."
+  end
+  if params["canonization_year"] != ""
+    saint.canonization_year = params["canonization_year"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s canonization year updated in saints.", "user_id" => $id})
-    erb :individual_saints    
-  elsif params["field"] == "description"
-    saint.description = params["update"]
+    @message << "Saint canonization year updated."
+  end
+  if params["description"] != ""
+    saint.description = params["description"]
     saint.save
     Change.add({"change_description" => "#{saint.saint_name}'s description updated in countries.", "user_id" => $id})
-    erb :individual_saints
+    @message << "Saint description updated."
   end
+  
+  erb :individual_saints
 end
 
 get "/see_saint_list" do

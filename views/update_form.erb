@@ -1,0 +1,60 @@
+<p><% @errors %></p>
+
+<% if params["cat"] == "country" %>
+<h1>Please select the country you wish to update.</h1>
+
+<form action="/update_country_form_do">
+  <select name ="country_id">
+    <% Country.all.each do |country| %> 
+      <option value="<%= country.id %>"><%= country.country_name %></option>
+    <% end %>
+  </select>
+  <p>To update the country's name, type here.</p>
+  <input type="text" placeholder="Update name" name="name">
+  <p>To update the country's description, type here.</p>
+  <input type="text" placeholder="Update description" name="description"></b>
+  <input type="submit">
+</form>
+<a href="/saint_countries">Return to Saint Countries</a></b>
+
+<% elsif params["cat"] == "saint" %>
+
+<h1>Please select the saint you wish to update.</h1>
+
+<form action="/update_saint_form_do">
+  <select name ="saint_id">
+    <% Saint.all.each do |saint| %> 
+      <option value="<%= saint.id %>"><%= saint.saint_name %></option>
+    <% end %>
+  </select>
+  
+  <p>To update the saint's name, type here.</p>
+  <input type="text" placeholder="Update name" name="name">
+  <p>To update the saint's description, type here.
+  <input type="text" placeholder="Update description" name="description">
+  <p>To update the saint's canonization year, type here.</p>
+  <input type="text" placeholder="Update description" name="canonization_year">
+  
+  <h3>For country update, please select the new country (leave blank if you do not wish to update)</h3>
+  <select name ="country_id">
+    <option value="blank"></option>
+    <% Country.all.each do |country| %> 
+      <option value="<%= country.id %>"><%= country.country_name %></option>
+    <% end %>
+  </select></b>
+  <h3>For category update, please select the new category (leave blank if you do not wish to update)</h3>
+  <select name ="category_id">
+    <option value="blank"></option>
+    <% Category.all.each do |category| %> 
+      <option value="<%= category.id %>"><%= category.category_name %></option>
+    <% end %>
+  </select></b>
+  <input type="submit">
+</form>
+
+<a href="/individual_saints">Return to Individual Saints</a></b>
+
+<% end %>
+
+<a href="/main_menu">Return to Main Menu</a></b>
+<a href="/home">Logout?</a>
