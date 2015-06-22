@@ -1,8 +1,9 @@
 <p><%= @errors %></p>
 <% if params["cat"] == "user" %>
-<h1>Please type in your desired username.</h1>
+<h1>Please type in your desired username and password.</h1>
 <form action="/new_user_form_do">
   <input type="text" placeholder="New User Name" name="user_name" value="<%= params["user_name"] %>">
+  <input type="text" placeholder="New Password" name="password" value="<%= params["password"] %>">
   <input type="submit">
 </form>
 
@@ -17,6 +18,7 @@
 </form>
 
 <a href="/saint_countries">Return to Saint Countries</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
 
 <% elsif params["cat"] == "category" %>
 
@@ -26,6 +28,7 @@
 </form>
 
 <a href="/saint_countries">Return to Saint Countries</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
 
 <% elsif params["cat"] == "saint" %>
 
@@ -50,8 +53,8 @@
 </form>
 
 <a href="/individual_saints">Return to Individual Saints</a></b>
+<a href="/main_menu">Return to Main Menu</a></b>
 
 <% end %>
 
-<a href="/main_menu">Return to Main Menu</a></b>
 <a href="/home">Logout?</a>

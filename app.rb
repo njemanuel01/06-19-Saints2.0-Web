@@ -8,7 +8,7 @@ CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'countries' (id INTEGER PRIMARY K
 CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'categories' (id INTEGER PRIMARY KEY, category_name TEXT UNIQUE NOT NULL)")
 CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'saints' (id INTEGER PRIMARY KEY, saint_name TEXT NOT NULL, 
 canonization_year INTEGER, description TEXT NOT NULL, category_id INTEGER, country_id INTEGER)")
-CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'users' (id INTEGER PRIMARY KEY, user_name TEXT)")
+CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'users' (id INTEGER PRIMARY KEY, user_name TEXT, password TEXT)")
 CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'changes' (id INTEGER PRIMARY KEY, change_description TEXT, user_id INTEGER)")
 
 CONNECTION.results_as_hash = true
@@ -29,13 +29,18 @@ end
 
 get "/user" do
   user = User.find(params["user_id"])
-  $id = user.id
-  @name = user.user_name
-  erb :login_success
+  if user.valid_password?(params["password"])
+    $id = user.id
+    @name = user.user_name
+    erb :login_success
+  else
+    @errors = user.errors
+    erb :home
+  end
 end
 
 get "/new_user_form_do" do
-  user = User.new({"id" => nil, "user_name" => params["user_name"]})
+  user = User.new({"id" => nil, "user_name" => params["user_name"], "password" => params["password"]})
   if user.add_to_database
     $id = user.id
     Change.add({"change_description" => "Added #{params["user_name"]} to users.", "user_id" => $id})

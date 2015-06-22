@@ -12,6 +12,7 @@ class User
   def initialize(values = {})
     @id = values["id"].to_i
     @user_name = values["user_name"]
+    @password = values["password"]
     @errors = []
   end
   
@@ -24,6 +25,21 @@ class User
       if @user_name == user.user_name
         @errors << "This username already exists."
       end
+    end
+    
+    if @password == ""
+      @errors << "No password entered."
+    end
+    
+    return @errors.empty?
+  end
+  
+  # Checks to see if the user has entered the correct password
+  #
+  # Returns a Boolean.
+  def valid_password?(password)
+    if @password != password
+      @errors << "Invalid password."
     end
     
     return @errors.empty?

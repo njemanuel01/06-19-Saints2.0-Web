@@ -1,13 +1,15 @@
 <h1>Welcome to Saint Manager 2.0</h1>
 
-<h3>Please select your user name, or create a new user</h3>
+<h3>Please enter your username and password.</h3>
 
+<p><%= @errors%></p>
 <form action="/user">
   <select name ="user_id">
     <% User.all.each do |user| %> 
       <option value="<%= user.id %>"><%= user.user_name %></option>
     <% end %>
   </select>
+  <input type="text" placeholder="Password" name="password" value="<%= params["password"] %>">
   <input type="submit">
 </form>
 
