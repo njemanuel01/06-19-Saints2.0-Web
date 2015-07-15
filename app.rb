@@ -2,6 +2,7 @@ require "sqlite3"
 require "sinatra"
 require "sinatra/reloader"
 require "pry"
+require "bcrypt"
 
 CONNECTION = SQLite3::Database.new("saints.db")
 CONNECTION.execute("CREATE TABLE IF NOT EXISTS 'countries' (id INTEGER PRIMARY KEY, country_name TEXT UNIQUE NOT NULL, country_description TEXT NOT NULL)")
@@ -28,9 +29,10 @@ get "/home" do
 end
 
 get "/user" do
-  user = User.find(params["user_id"])
+  array = User.where("user_name", params["user_name"])
+  user = array[0]
   if user.valid_password?(params["password"])
-    $id = user.id
+    session["id"] = user.id
     @name = user.user_name
     erb :login_success
   else
@@ -40,9 +42,10 @@ get "/user" do
 end
 
 get "/new_user_form_do" do
-  user = User.new({"id" => nil, "user_name" => params["user_name"], "password" => params["password"]})
+  password = BCrypt::Password.create(params["password"])
+  user = User.new({"id" => nil, "user_name" => params["user_name"], "password" => password})
   if user.add_to_database
-    $id = user.id
+    session["id"] = user.id
     Change.add({"change_description" => "Added #{params["user_name"]} to users.", "user_id" => $id})
     @name = user.user_name
     erb :login_success
@@ -98,7 +101,7 @@ end
 get "/new_country_form_do" do
   country = Country.new({"id" => nil, "country_name" => params["country_name"], "country_description" => params["description"]})
   if country.add_to_database
-    Change.add({"change_description" => "Added #{params["country_name"]} to countries.", "user_id" => $id})
+    Change.add({"change_description" => "Added #{params["country_name"]} to countries.", "user_id" => session["id"]})
     @message = "Country added."
     erb :saint_countries
   else
@@ -115,7 +118,7 @@ get "/update_country_form_do" do
     country.country_name = params["name"]
     if country.valid?
       country.save
-      Change.add({"change_description" => "#{params["name"]}'s name updated in countries.", "user_id" => $id})
+      Change.add({"change_description" => "#{params["name"]}'s name updated in countries.", "user_id" => session["id"]})
       @message << "Country name updated."
     else
       @errors = country.errors
@@ -126,7 +129,7 @@ get "/update_country_form_do" do
   if params["description"] != ""
     country.country_description = params["description"]
     country.save
-    Change.add({"change_description" => "#{country.country_name}'s description updated in countries.", "user_id" => $id})
+    Change.add({"change_description" => "#{country.country_name}'s description updated in countries.", "user_id" => session["id"]})
     @message << "Country description updated."
   end
   
@@ -138,7 +141,7 @@ get "/delete_country" do
     country = Country.find(params["country_id"])
     name = country.country_name
     @message = country.delete
-    Change.add({"change_description" => "#{name} deleted from countries.", "user_id" => $id})
+    Change.add({"change_description" => "#{name} deleted from countries.", "user_id" => session["id"]})
     erb :saint_countries
   else
     @message = "The country has saints associated with it, it cannot be deleted."
@@ -151,7 +154,7 @@ end
 get "/new_category_form_do" do
   category = Category.new({"id" => nil, "category_name" => params["category_name"]})
   if category.add_to_database
-    Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => $id})
+    Change.add({"change_description" => "Added #{params["category_name"]} to categories.", "user_id" => session["id"]})
     @message = "Category added."
     erb :saint_categories
   else
@@ -166,7 +169,7 @@ get "/delete_category" do
     category = Category.find(params["category_id"])
     name = category.category_name
     @message = category.delete
-    Change.add({"change_description" => "#{name} deleted from categories.", "user_id" => $id})
+    Change.add({"change_description" => "#{name} deleted from categories.", "user_id" => session["id"]})
     erb :saint_categories
   else
     @message = "The category has saints associated with it, it cannot be deleted."
@@ -188,31 +191,31 @@ get "/update_saint_form_do" do
   if params["country_id"] != "blank"
     saint.country_id = params["country_id"]
     saint.save
-    Change.add({"change_description" => "#{saint.saint_name}'s country updated in saints.", "user_id" => $id})
+    Change.add({"change_description" => "#{saint.saint_name}'s country updated in saints.", "user_id" => session["id"]})
     @message << "Saint country updated."
   end
   if params["category_id"] != "blank"
     saint.category_id = params["category_id"]
     saint.save
-    Change.add({"change_description" => "#{saint.saint_name}'s category updated in saints.", "user_id" => $id})
+    Change.add({"change_description" => "#{saint.saint_name}'s category updated in saints.", "user_id" => session["id"]})
     @message << "Saint category updated."
   end
   if params["name"] != ""
     saint.saint_name = params["name"]
     saint.save
-    Change.add({"change_description" => "#{params["name"]}'s name updated in saints.", "user_id" => $id})
+    Change.add({"change_description" => "#{params["name"]}'s name updated in saints.", "user_id" => session["id"]})
     @message << "Saint name updated."
   end
   if params["canonization_year"] != ""
     saint.canonization_year = params["canonization_year"]
     saint.save
-    Change.add({"change_description" => "#{saint.saint_name}'s canonization year updated in saints.", "user_id" => $id})
+    Change.add({"change_description" => "#{saint.saint_name}'s canonization year updated in saints.", "user_id" => session["id"]})
     @message << "Saint canonization year updated."
   end
   if params["description"] != ""
     saint.description = params["description"]
     saint.save
-    Change.add({"change_description" => "#{saint.saint_name}'s description updated in countries.", "user_id" => $id})
+    Change.add({"change_description" => "#{saint.saint_name}'s description updated in countries.", "user_id" => session["id"]})
     @message << "Saint description updated."
   end
   
@@ -246,7 +249,7 @@ get "/delete_saint" do
   saint = Saint.find(params["saint_id"])
   name = saint.saint_name
   @message = saint.delete
-  Change.add({"change_description" => "#{name} deleted from saints.", "user_id" => $id})
+  Change.add({"change_description" => "#{name} deleted from saints.", "user_id" => session["id"]})
   erb :individual_saints
 end
 

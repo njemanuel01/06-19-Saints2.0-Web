@@ -4,11 +4,7 @@
 
 <p><%= @errors%></p>
 <form action="/user">
-  <select name ="user_id">
-    <% User.all.each do |user| %> 
-      <option value="<%= user.id %>"><%= user.user_name %></option>
-    <% end %>
-  </select>
+  <input type="text" placeholder="Username" name="user_name" value="<%= params["user_name"]%>">
   <input type="text" placeholder="Password" name="password" value="<%= params["password"] %>">
   <input type="submit">
 </form>
