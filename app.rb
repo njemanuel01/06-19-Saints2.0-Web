@@ -43,10 +43,12 @@ end
 
 get "/new_user_form_do" do
   password = BCrypt::Password.create(params["password"])
+  binding.pry
   user = User.new({"id" => nil, "user_name" => params["user_name"], "password" => password})
+  binding.pry
   if user.add_to_database
     session["id"] = user.id
-    Change.add({"change_description" => "Added #{params["user_name"]} to users.", "user_id" => $id})
+    Change.add({"change_description" => "Added #{params["user_name"]} to users.", "user_id" => session["id"]})
     @name = user.user_name
     erb :login_success
   else
