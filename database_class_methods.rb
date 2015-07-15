@@ -58,6 +58,7 @@ module DatabaseClassMethod
 
       columns = values_hash.keys
       values = values_hash.values
+      binding.pry
       CONNECTION.execute("INSERT INTO #{table_name} (#{columns.join ", "}) VALUES (#{values.to_s[1...-1]});")
 
       id = CONNECTION.last_insert_row_id

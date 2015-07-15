@@ -38,8 +38,7 @@ class User
   #
   # Returns a Boolean.
   def valid_password?(password)
-    test = BCrypt::Password.new(@password)
-    if !(test == password)
+    if !(BCrypt::Password.new(@password) == password)
       @errors << "Login Failed."
     end
     
