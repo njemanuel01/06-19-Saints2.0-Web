@@ -38,6 +38,10 @@ end
 
 get "/user" do
   array = User.where("user_name", params["user_name"])
+  if array == []
+    @errors = "Login Failed."
+    return erb :home
+  end
   user = array[0]
   if user.valid_password?(params["password"])
     session[:id] = user.id
